@@ -3598,6 +3598,9 @@
       function singleValueSummaryCard(label, value, valueLabel = "Selected") {
         return `<div class="summary-card summary-card-accent"><div class="summary-card-title">${escapeHtml(label)}</div><div class="summary-card-stats"><div class="summary-stat"><div class="summary-stat-label">${escapeHtml(valueLabel)}</div><div class="summary-stat-value">${escapeHtml(value)}</div></div></div></div>`;
       }
+      function selectionSummaryCard(searchCount, bundleCount) {
+        return `<div class="summary-card summary-card-accent"><div class="summary-card-title">Selection</div><div class="summary-card-stats"><div class="summary-stat"><div class="summary-stat-label">Searches</div><div class="summary-stat-value">${escapeHtml(searchCount)}</div></div><div class="summary-stat"><div class="summary-stat-label">Bundles</div><div class="summary-stat-value">${escapeHtml(bundleCount)}</div></div></div></div>`;
+      }
       function renderTagbar(container, tags, activeTags, scope) {
         if (!container) return;
         const buttons = [
@@ -3766,6 +3769,9 @@
         );
         syncTagModeButtons();
         const selectedSearchCount = runnerSearchIds().length;
+        const selectedBundleCount = state.config.bundles.filter((bundle) =>
+          bundleSelectionState(bundle).allSelected,
+        ).length;
         ui.searchesSummary.innerHTML = [
           summaryCard(
             "Searches",
@@ -3777,7 +3783,7 @@
             state.config.bundles.length,
             visibleBundles.length,
           ),
-          singleValueSummaryCard("Selection", selectedSearchCount, "Selected"),
+          selectionSummaryCard(selectedSearchCount, selectedBundleCount),
         ].join("");
         [
           [ui.searchRunnerSection, "searchRunner"],
