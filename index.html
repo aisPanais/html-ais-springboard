@@ -1,15 +1,15 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta name="theme-color" content="#1e293b">
-    <meta name="application-name" content="Springboard">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Command Board</title>
+    <meta name="theme-color" content="#1e293b">
+    <meta name="application-name" content="Springboard">
+    <title>Springboard</title>
     <style>
       :root {
         --bg: #0f172a;
@@ -2068,7 +2068,7 @@
     <script id="embeddedConfig" type="application/json">
       {
         "version": 1,
-        "title": "Command Board",
+        "title": "Springboard",
         "linkSections": [
           {
             "name": "Core",
@@ -2145,7 +2145,7 @@
   <body class="theme-dark">
     <div class="app">
       <div class="header">
-        <div class="app-title" id="appTitle">Command Board</div>
+        <div class="app-title" id="appTitle">Springboard</div>
         <div class="input-wrap">
           <input
             id="globalFilter"
@@ -2621,7 +2621,7 @@
         } catch {
           return {
             version: 1,
-            title: "Command Board",
+            title: "Springboard",
             linkSections: [],
             searches: [],
             bundles: [],
@@ -2742,7 +2742,7 @@
           title:
             typeof config?.title === "string" && config.title.trim()
               ? config.title.trim()
-              : "Command Board",
+              : "Springboard",
           linkSections: Array.isArray(config?.linkSections)
             ? config.linkSections
             : [],
@@ -2921,8 +2921,8 @@
           .forEach((cls) => document.body.classList.remove(cls));
         document.body.classList.add(`theme-${currentThemeClassName()}`);
         renderThemeOptions();
-        document.title = state.config.title || "Command Board";
-        ui.appTitle.textContent = state.config.title || "Command Board";
+        document.title = state.config.title || "Springboard";
+        ui.appTitle.textContent = state.config.title || "Springboard";
       }
       function cycleTheme() {
         state.prefs.themeMode =
@@ -3597,9 +3597,6 @@
       function singleValueSummaryCard(label, value, valueLabel = "Selected") {
         return `<div class="summary-card summary-card-accent"><div class="summary-card-title">${escapeHtml(label)}</div><div class="summary-card-stats"><div class="summary-stat"><div class="summary-stat-label">${escapeHtml(valueLabel)}</div><div class="summary-stat-value">${escapeHtml(value)}</div></div></div></div>`;
       }
-      function selectionSummaryCard(searchCount, bundleCount) {
-        return `<div class="summary-card summary-card-accent"><div class="summary-card-title">Selection</div><div class="summary-card-stats"><div class="summary-stat"><div class="summary-stat-label">Searches</div><div class="summary-stat-value">${escapeHtml(searchCount)}</div></div><div class="summary-stat"><div class="summary-stat-label">Bundles</div><div class="summary-stat-value">${escapeHtml(bundleCount)}</div></div></div></div>`;
-      }
       function renderTagbar(container, tags, activeTags, scope) {
         if (!container) return;
         const buttons = [
@@ -3768,9 +3765,6 @@
         );
         syncTagModeButtons();
         const selectedSearchCount = runnerSearchIds().length;
-        const selectedBundleCount = state.config.bundles.filter((bundle) =>
-          bundleSelectionState(bundle).allSelected,
-        ).length;
         ui.searchesSummary.innerHTML = [
           summaryCard(
             "Searches",
@@ -3782,7 +3776,7 @@
             state.config.bundles.length,
             visibleBundles.length,
           ),
-          selectionSummaryCard(selectedSearchCount, selectedBundleCount),
+          singleValueSummaryCard("Selection", selectedSearchCount, "Selected"),
         ].join("");
         [
           [ui.searchRunnerSection, "searchRunner"],
@@ -4536,7 +4530,7 @@
       function bindEvent(target, eventName, handler, label = "") {
         if (!target || typeof target.addEventListener != "function") {
           console.warn(
-            `[Command Board] Missing binding target${label ? `: ${label}` : ""}`,
+            `[Springboard] Missing binding target${label ? `: ${label}` : ""}`,
           );
           return false;
         }
@@ -4615,12 +4609,12 @@
         );
         if (missing.length)
           console.warn(
-            "[Command Board] Missing required UI nodes:",
+            "[Springboard] Missing required UI nodes:",
             missing.join(", "),
           );
         if (missingHelpers.length)
           console.warn(
-            "[Command Board] Missing runtime helpers:",
+            "[Springboard] Missing runtime helpers:",
             missingHelpers.join(", "),
           );
         return { missing, missingHelpers };
@@ -6069,7 +6063,7 @@
               };
               state.config.title =
                 document.getElementById("boardTitleInput").value.trim() ||
-                "Command Board";
+                "Springboard";
               if (isNew) state.config.linkSections.push(next);
               else state.config.linkSections[sectionIndex] = next;
               saveConfig();
@@ -6452,7 +6446,7 @@
             saveBoardTitleBtn: () => {
               state.config.title =
                 document.getElementById("manageTitleInput").value.trim() ||
-                "Command Board";
+                "Springboard";
               saveConfig();
               render();
               closeModal();
@@ -7452,7 +7446,7 @@
         initializeApp();
         startupSmokeCheck();
       } catch (error) {
-        console.error("[Command Board] Startup failed", error);
+        console.error("[Springboard] Startup failed", error);
         showStartupError(
           `The board could not finish loading.\n\n${error?.message || error}`,
         );
